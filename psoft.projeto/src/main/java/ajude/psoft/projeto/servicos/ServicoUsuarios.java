@@ -12,16 +12,19 @@ import ajude.psoft.projeto.entidades.Usuario;
 public class ServicoUsuarios {
 
     private RepositorioUsuarios<Usuario, String> usuariosDAO;
+    private ServicoEmail servicoEmail;
 
-    public ServicoUsuarios(RepositorioUsuarios<Usuario, String> usuariosDAO){
+    public ServicoUsuarios(RepositorioUsuarios<Usuario, String> usuariosDAO, ServicoEmail servicoEmail){
         super();
         this.usuariosDAO = usuariosDAO;
+        this.servicoEmail = servicoEmail;
     }
 
     public Usuario adicionaUsuario(Usuario usuario) throws ServerException{
         if (this.existeNoDAO(usuario.getEmail())){
             throw new ServerException("Email já cadastrado");
         }
+        this.servicoEmail.sendNotification(usuario);
         return usuariosDAO.save(usuario);
     }
 

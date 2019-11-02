@@ -25,7 +25,9 @@ public class ServicoEmail {
         mail.setTo(usuario.getEmail());
 		mail.setFrom("ajudeprojeto@gmail.com");
 		mail.setSubject("Cadastro Confirmado!");
-		mail.setText("Sei la vei");
+		mail.setText("Olá, Seja Bem Vindo(a)!\n\nSeu cadastro foi realizado com sucesso, aproveite ao máximo a experiência " + 
+		"de participar ativamente de nossos projetos. Para dar o primeiro passo e realizar sua primeira doação basta acessar o link: <aqui vai " +
+		"ficar o link da aplicação>\n\nEste e-mail foi enviado altomaticamente pelo nosso sistema.");
 
 		this.javaMailSender.send(mail);
 	}
