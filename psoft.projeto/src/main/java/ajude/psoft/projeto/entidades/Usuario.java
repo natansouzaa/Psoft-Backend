@@ -1,7 +1,5 @@
 package ajude.psoft.projeto.entidades;
 
-import java.util.Objects;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -29,23 +27,23 @@ public class Usuario {
     }
 
     public String getEmail() {
-		return this.email;
-	}
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Usuario)) {
-            return false;
-        }
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(email, usuario.email) && Objects.equals(primeiroNome, usuario.primeiroNome) && Objects.equals(ultimoNome, usuario.ultimoNome) && Objects.equals(cartaoDeCredito, usuario.cartaoDeCredito) && Objects.equals(senhaDoCartao, usuario.senhaDoCartao);
+        return this.email;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(email, primeiroNome, ultimoNome, cartaoDeCredito, senhaDoCartao);
+    public String getPrimeiroNome() {
+        return this.primeiroNome;
+    }
+
+    public String getUltimoNome() {
+        return this.ultimoNome;
+    }
+
+    public String getCartaoDeCredito() {
+        return this.cartaoDeCredito;
+    }
+
+    public String getSenhaDoCartao() {
+        return this.senhaDoCartao;
     }
 
 }
