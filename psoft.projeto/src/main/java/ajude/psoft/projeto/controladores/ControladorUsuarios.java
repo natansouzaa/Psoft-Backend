@@ -1,6 +1,6 @@
 package ajude.psoft.projeto.controladores;
 
-import java.rmi.ServerException;
+import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class ControladorUsuarios {
     // Adiciona um usuario com email, nome e senha. O email sera o login do usuario
     // e deve ser o identificador unico
     @PostMapping("/usuarios")
-    public ResponseEntity<Usuario> adicionaUsuario(@RequestBody Usuario novoUsuario) throws ServerException {
+    public ResponseEntity<Usuario> adicionaUsuario(@RequestBody Usuario novoUsuario) throws ServletException {
         return new ResponseEntity<Usuario>(servicoUsuarios.adicionaUsuario(novoUsuario), HttpStatus.CREATED);
     }
 
