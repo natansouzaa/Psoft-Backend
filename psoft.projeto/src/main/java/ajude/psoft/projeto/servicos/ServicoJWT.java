@@ -8,17 +8,17 @@ import javax.servlet.ServletException;
 import org.springframework.stereotype.Service;
 
 import ajude.psoft.projeto.entidades.Usuario;
-import ajude.psoft.projeto.filtros.TokenFilter;
+import ajude.psoft.projeto.filtros.FiltroToken;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 
 @Service
-public class JWTService {
+public class ServicoJWT {
 	private ServicoUsuarios usuariosService;
 	private final String TOKEN_KEY = "login";
 
-	public JWTService(ServicoUsuarios usuariosService) {
+	public ServicoJWT(ServicoUsuarios usuariosService) {
 		super();
 		this.usuariosService = usuariosService;
 	}
@@ -42,7 +42,7 @@ public class JWTService {
 		}
 
 		// Extraindo apenas o token do cabecalho.
-		String token = authorizationHeader.substring(TokenFilter.TOKEN_INDEX);
+		String token = authorizationHeader.substring(FiltroToken.TOKEN_INDEX);
 
 		String subject = null;
 		try {

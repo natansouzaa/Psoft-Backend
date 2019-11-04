@@ -18,7 +18,7 @@ import io.jsonwebtoken.PrematureJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
-public class TokenFilter extends GenericFilterBean {
+public class FiltroToken extends GenericFilterBean {
     public final static int TOKEN_INDEX = 7;
 
     @Override

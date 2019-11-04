@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ajude.psoft.projeto.entidades.Usuario;
-import ajude.psoft.projeto.servicos.JWTService;
+import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
 
 @RestController
 @RequestMapping("/auth")
-public class LoginController {
+public class ControladorLogin {
 
-	private JWTService jwtService;
+	private ServicoJWT jwtService;
 	private ServicoUsuarios usuariosService;
 
-	public LoginController(ServicoUsuarios usuariosService, JWTService jwtService) {
+	public ControladorLogin(ServicoUsuarios usuariosService, ServicoJWT jwtService) {
 		super();
 		this.usuariosService = usuariosService;
 		this.jwtService = jwtService;
