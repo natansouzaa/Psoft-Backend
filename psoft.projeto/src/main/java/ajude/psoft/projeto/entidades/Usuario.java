@@ -11,19 +11,19 @@ public class Usuario {
     private String primeiroNome;
     private String ultimoNome;
     private String cartaoDeCredito;
-    private String senhaDoCartao;
+    private String senha;
 
     public Usuario(){
         super();
     }
 
-    public Usuario(String primeiroNome, String ultimoNome, String email, String cartaoDeCredito, String senhaDoCartao){
+    public Usuario(String primeiroNome, String ultimoNome, String email, String cartaoDeCredito, String senha){
         super();
         this.primeiroNome = primeiroNome;
         this.ultimoNome = ultimoNome;
         this.email = email;
         this.cartaoDeCredito = cartaoDeCredito;
-        this.senhaDoCartao = senhaDoCartao;
+        this.senha = senha;
     }
 
     public String getEmail() {
@@ -42,8 +42,8 @@ public class Usuario {
         return this.cartaoDeCredito;
     }
 
-    public String getSenhaDoCartao() {
-        return this.senhaDoCartao;
+    public String getSenha() {
+        return this.senha;
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.servlet.ServletException;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import ajude.psoft.projeto.entidades.Usuario;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class ControladorLogin {
@@ -46,7 +48,7 @@ public class ControladorLogin {
 	}
 
 	private void verificaSenha(Usuario usuario, Optional<Usuario> authUsuario) throws ServletException {
-		if (!authUsuario.get().getSenhaDoCartao().equals(usuario.getSenhaDoCartao())) {
+		if (!authUsuario.get().getSenha().equals(usuario.getSenha())) {
 			throw new ServletException("Senha invalida!");
 		}
 	}
