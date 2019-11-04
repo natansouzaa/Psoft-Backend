@@ -1,0 +1,10 @@
+package ajude.psoft.projeto.controladores;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ControladorCampanhas {
+
+    
+
+}
