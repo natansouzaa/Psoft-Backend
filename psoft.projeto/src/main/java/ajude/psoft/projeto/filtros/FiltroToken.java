@@ -45,6 +45,5 @@ public class FiltroToken extends GenericFilterBean {
 
         }
         chain.doFilter(request, response);
-
     }
 }
