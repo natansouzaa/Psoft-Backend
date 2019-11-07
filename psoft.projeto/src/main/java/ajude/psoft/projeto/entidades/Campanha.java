@@ -28,8 +28,6 @@ public class Campanha {
 
     public Campanha() {
         super();
-        this.status = "ativa";
-        this.curtidas = 0;
     }
 
     public Campanha(String nomeCurto, String identificadorURL, String descricao,
