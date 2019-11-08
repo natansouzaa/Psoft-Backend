@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import org.springframework.stereotype.Service;
 
 import ajude.psoft.projeto.entidades.Usuario;
+import ajude.psoft.projeto.erros.ResourceRequestTimeOutException;
+import ajude.psoft.projeto.erros.ResourceUnauthorizedException;
 import ajude.psoft.projeto.filtros.FiltroToken;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -36,9 +38,9 @@ public class ServicoJWT {
 		return optUsuario.isPresent() && optUsuario.get().getEmail().equals(email);
 	}
 
-	private String getSujeitoDoToken(String authorizationHeader) throws ServletException {
+	private String getSujeitoDoToken(String authorizationHeader){
 		if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-			throw new ServletException("Token inexistente ou mal formatado!");
+			throw new ResourceUnauthorizedException("Token inexistente ou mal formatado!");
 		}
 
 		// Extraindo apenas o token do cabecalho.
@@ -48,7 +50,7 @@ public class ServicoJWT {
 		try {
 			subject = Jwts.parser().setSigningKey("login").parseClaimsJws(token).getBody().getSubject();
 		} catch (SignatureException e) {
-			throw new ServletException("Token invalido ou expirado!");
+			throw new ResourceRequestTimeOutException("Token invalido ou expirado!");
 		}
 		return subject;
 	}

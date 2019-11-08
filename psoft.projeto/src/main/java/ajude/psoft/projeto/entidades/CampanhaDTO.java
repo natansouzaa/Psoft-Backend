@@ -9,21 +9,27 @@ public class CampanhaDTO {
     private String descricao;
     private Calendar dataLimite;
     private float meta;
-    private String emailDono;
-
-    public CampanhaDTO(){
-        super();
-    }
-    
+    private String emailDono;   
 
     public CampanhaDTO(String nomeCurto, String identificadorURL, String descricao, Calendar dataLimite, float meta, String emailDono) {
-        super();
         this.nomeCurto = nomeCurto;
         this.identificadorURL = identificadorURL;
         this.descricao = descricao;
         this.dataLimite = dataLimite;
         this.meta = meta;
         this.emailDono = emailDono;
+    }
+
+    public Campanha transformarParaCampanha(){
+        Campanha retorno = new Campanha();
+        retorno.setDataLimite(this.getDataLimite());
+        retorno.setDescricao(this.getDescricao());
+        retorno.setCurtidas(0);
+        retorno.setIdentificadorURL(this.getIdentificadorURL());
+        retorno.setMeta(this.getMeta());
+        retorno.setNomeCurto(this.getNomeCurto());
+        retorno.setStatus("ativa");
+        return retorno;
     }
 
     public String getNomeCurto() {

@@ -28,13 +28,7 @@ public class ControladorCampanhas {
     
     @PostMapping("/campanhas")
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CampanhaDTO novaCampanhaDTO){
-        Campanha campanhaFinal = new Campanha();
-        campanhaFinal.setDataLimite(novaCampanhaDTO.getDataLimite());
-        campanhaFinal.setDescricao(novaCampanhaDTO.getDescricao());
-        campanhaFinal.setCurtidas(0);
-        campanhaFinal.setIdentificadorURL(novaCampanhaDTO.getIdentificadorURL());
-        campanhaFinal.setMeta(novaCampanhaDTO.getMeta());
-        campanhaFinal.setNomeCurto(novaCampanhaDTO.getNomeCurto());
+        Campanha campanhaFinal = novaCampanhaDTO.transformarParaCampanha();
         campanhaFinal.setUsuarioDono(servicoUsuarios.retornaUsuario(novaCampanhaDTO.getEmailDono()).get());
         return new ResponseEntity<Campanha>(servicoCampanhas.adicionaCampanha(campanhaFinal), HttpStatus.CREATED);
     }

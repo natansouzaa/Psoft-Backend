@@ -2,8 +2,6 @@ package ajude.psoft.projeto.controladores;
 
 import java.util.Optional;
 
-import javax.servlet.ServletException;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ajude.psoft.projeto.entidades.Usuario;
+import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
 
@@ -29,14 +28,14 @@ public class ControladorLogin {
 	}
 
 	@PostMapping("/login")
-	public LoginResponse authenticate(@RequestBody Usuario usuario) throws ServletException {
+	public LoginResponse authenticate(@RequestBody Usuario usuario){
 
 		// Recupera o usuario
 		Optional<Usuario> authUsuario = usuariosService.retornaUsuario(usuario.getEmail());
 
 		// verificacoes
 		if (!authUsuario.isPresent()) {
-			throw new ServletException("Usuario nao encontrado!");
+			throw new ResourceBadRequestException("Email e/ou senha incorreto(s))");
 		}
 
 		verificaSenha(usuario, authUsuario);
@@ -47,9 +46,9 @@ public class ControladorLogin {
 
 	}
 
-	private void verificaSenha(Usuario usuario, Optional<Usuario> authUsuario) throws ServletException {
+	private void verificaSenha(Usuario usuario, Optional<Usuario> authUsuario){
 		if (!authUsuario.get().getSenha().equals(usuario.getSenha())) {
-			throw new ServletException("Senha invalida!");
+			throw new ResourceBadRequestException("Email e/ou senha incorreto(s))");
 		}
 	}
 

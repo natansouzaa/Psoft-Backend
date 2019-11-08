@@ -1,6 +1,5 @@
 package ajude.psoft.projeto.servicos;
 
-import javax.servlet.ServletException;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -20,10 +19,7 @@ public class ServicoUsuarios {
         this.servicoEmail = servicoEmail;
     }
 
-    public Usuario adicionaUsuario(Usuario usuario) throws ServletException{
-        if (this.existeNoDAO(usuario.getEmail())){
-            throw new ServletException("Email já cadastrado!");
-        }
+    public Usuario adicionaUsuario(Usuario usuario){
         this.servicoEmail.sendNotification(usuario);
         return usuariosDAO.save(usuario);
     }
