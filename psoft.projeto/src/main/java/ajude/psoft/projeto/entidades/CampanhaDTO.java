@@ -1,17 +1,21 @@
 package ajude.psoft.projeto.entidades;
 
-import java.util.Calendar;
+import java.util.Date;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 public class CampanhaDTO {
 
     private String nomeCurto;
     private String identificadorURL;
     private String descricao;
-    private Calendar dataLimite;
+    @Temporal(TemporalType.DATE)
+    private Date dataLimite;
     private float meta;
     private String emailDono;   
 
-    public CampanhaDTO(String nomeCurto, String identificadorURL, String descricao, Calendar dataLimite, float meta, String emailDono) {
+    public CampanhaDTO(String nomeCurto, String identificadorURL, String descricao, Date dataLimite, float meta, String emailDono) {
         this.nomeCurto = nomeCurto;
         this.identificadorURL = identificadorURL;
         this.descricao = descricao;
@@ -28,7 +32,7 @@ public class CampanhaDTO {
         retorno.setIdentificadorURL(this.getIdentificadorURL());
         retorno.setMeta(this.getMeta());
         retorno.setNomeCurto(this.getNomeCurto());
-        retorno.setStatus("ativa");
+        retorno.setStatus(Estado.ATIVA);
         return retorno;
     }
 
@@ -56,11 +60,11 @@ public class CampanhaDTO {
         this.descricao = descricao;
     }
 
-    public Calendar getDataLimite() {
+    public Date getDataLimite() {
         return this.dataLimite;
     }
 
-    public void setDataLimite(Calendar dataLimite) {
+    public void setDataLimite(Date dataLimite) {
         this.dataLimite = dataLimite;
     }
 

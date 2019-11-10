@@ -2,18 +2,17 @@ package ajude.psoft.projeto.controladores;
 
 import java.util.Optional;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ajude.psoft.projeto.entidades.Usuario;
+import ajude.psoft.projeto.entidades.UsuarioDTO;
 import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class ControladorLogin {
@@ -28,17 +27,17 @@ public class ControladorLogin {
 	}
 
 	@PostMapping("/login")
-	public LoginResponse authenticate(@RequestBody Usuario usuario){
+	public LoginResponse authenticate(@RequestBody UsuarioDTO usuarioDTO){
 
 		// Recupera o usuario
-		Optional<Usuario> authUsuario = usuariosService.retornaUsuario(usuario.getEmail());
+		Optional<Usuario> authUsuario = usuariosService.retornaUsuario(usuarioDTO.getEmail());
 
 		// verificacoes
 		if (!authUsuario.isPresent()) {
 			throw new ResourceBadRequestException("Email e/ou senha incorreto(s))");
 		}
 
-		verificaSenha(usuario, authUsuario);
+		verificaSenha(usuarioDTO.getSenha(), authUsuario);
 
 		String token = jwtService.geraToken(authUsuario.get().getEmail());
 
@@ -46,8 +45,8 @@ public class ControladorLogin {
 
 	}
 
-	private void verificaSenha(Usuario usuario, Optional<Usuario> authUsuario){
-		if (!authUsuario.get().getSenha().equals(usuario.getSenha())) {
+	private void verificaSenha(String senhaUsuarioDTO, Optional<Usuario> authUsuario){
+		if (!authUsuario.get().getSenha().equals(senhaUsuarioDTO)) {
 			throw new ResourceBadRequestException("Email e/ou senha incorreto(s))");
 		}
 	}

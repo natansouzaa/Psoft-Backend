@@ -1,11 +1,13 @@
 package ajude.psoft.projeto.entidades;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Campanha {
@@ -16,8 +18,9 @@ public class Campanha {
     private String nomeCurto;
     private String identificadorURL; //sera gerado pelo frontend
     private String descricao;
-    private Calendar dataLimite;
-    private String status;
+    @Temporal(TemporalType.DATE)
+    private Date dataLimite;
+    private Estado status;
     private float meta;
     private String[] doacoes;
     @ManyToOne
@@ -31,7 +34,7 @@ public class Campanha {
     }
 
     public Campanha(String nomeCurto, String identificadorURL, String descricao,
-        Calendar dataLimite, String status, float meta, String[] doacoes, Usuario usuarioDono,
+        Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
         String[] comentarios, int curtidas) {
         super();
         this.nomeCurto = nomeCurto;
@@ -47,7 +50,7 @@ public class Campanha {
     }
 
     public Campanha(long id, String nomeCurto, String identificadorURL, String descricao,
-        Calendar dataLimite, String status, float meta, String[] doacoes, Usuario usuarioDono,
+        Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
         String[] comentarios, int curtidas) {
         super();
         this.id = id;
@@ -95,19 +98,19 @@ public class Campanha {
         this.descricao = descricao;
     }
 
-    public Calendar getDataLimite() {
+    public Date getDataLimite() {
         return this.dataLimite;
     }
 
-    public void setDataLimite(Calendar dataLimite) {
+    public void setDataLimite(Date dataLimite) {
         this.dataLimite = dataLimite;
     }
 
-    public String getStatus() {
+    public Estado getStatus() {
         return this.status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Estado status) {
         this.status = status;
     }
 

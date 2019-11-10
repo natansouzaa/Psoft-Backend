@@ -10,4 +10,6 @@ import ajude.psoft.projeto.entidades.Campanha;
 @Repository
 public interface RepositorioCampanhas<T, ID extends Serializable> extends JpaRepository<Campanha, Long>{
 
+    Campanha findByidentificadorURL(String identificadorURL);
+
 }
