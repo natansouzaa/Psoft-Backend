@@ -31,12 +31,18 @@ public class ServicoCampanhas{
 		return this.campanhasDAO.findByidentificadorURL(identificadorURL);
 	}
 
-	public List<Campanha> retornaCampanhasPelaBusca(String busca) {
+	public List<Campanha> retornaCampanhasPelaBusca(String busca, Boolean todos) {
         List<Campanha> todasAsCampanhas = this.campanhasDAO.findAll();
         List<Campanha> campanhasSelecionadas = new ArrayList<Campanha>();
         for (Campanha campanha : todasAsCampanhas) {
-            if (campanha.getNomeCurto().toLowerCase().contains(busca.toLowerCase()) && campanha.getStatus() == Estado.ATIVA){
-                campanhasSelecionadas.add(campanha);
+            if (campanha.getNomeCurto().toLowerCase().contains(busca.toLowerCase())){
+                if (todos){
+                    campanhasSelecionadas.add(campanha);
+                } else {
+                    if (campanha.getStatus() == Estado.ATIVA){
+                        campanhasSelecionadas.add(campanha);
+                    }
+                }
             }
         }
         return campanhasSelecionadas;
