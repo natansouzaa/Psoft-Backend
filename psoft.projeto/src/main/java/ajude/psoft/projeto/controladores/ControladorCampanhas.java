@@ -33,6 +33,7 @@ public class ControladorCampanhas {
     @PostMapping("/campanhas")
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CampanhaDTO novaCampanhaDTO){
         Campanha campanhaFinal = novaCampanhaDTO.transformarParaCampanha();
+        System.out.println(campanhaFinal);
         campanhaFinal.setUsuarioDono(servicoUsuarios.retornaUsuario(novaCampanhaDTO.getEmailDono()).get());
         if (servicoCampanhas.retornaCampanhaPeloIdentificadorURL(novaCampanhaDTO.getIdentificadorURL()) != null){
             throw new ResourceBadRequestException("URL já está em uso");

@@ -20,6 +20,7 @@ public class ServicoCampanhas{
     }
 
     public Campanha adicionaCampanha(Campanha campanha){
+        System.out.println(campanha);
         return this.campanhasDAO.save(campanha);
     }
 
