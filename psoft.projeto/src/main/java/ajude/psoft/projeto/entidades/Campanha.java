@@ -1,6 +1,9 @@
 package ajude.psoft.projeto.entidades;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +18,8 @@ public class Campanha {
     @Id
     @GeneratedValue
     private long id;
+
+
     private String nomeCurto;
     private String identificadorURL; //sera gerado pelo frontend
     private String descricao;
@@ -25,7 +30,7 @@ public class Campanha {
     private String[] doacoes;
     @ManyToOne
     private Usuario usuarioDono;
-    private String[] comentarios;
+    private List<Comentario> comentarios = new ArrayList<>();
     private int curtidas;
 
 
@@ -34,8 +39,8 @@ public class Campanha {
     }
 
     public Campanha(String nomeCurto, String identificadorURL, String descricao,
-        Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
-        String[] comentarios, int curtidas) {
+                    Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
+                    int curtidas) {
         super();
         this.nomeCurto = nomeCurto;
         this.identificadorURL = identificadorURL;
@@ -45,13 +50,12 @@ public class Campanha {
         this.meta = meta;
         this.doacoes = doacoes;
         this.usuarioDono = usuarioDono;
-        this.comentarios = comentarios;
         this.curtidas = curtidas;
     }
 
     public Campanha(long id, String nomeCurto, String identificadorURL, String descricao,
         Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
-        String[] comentarios, int curtidas) {
+         int curtidas) {
         super();
         this.id = id;
         this.nomeCurto = nomeCurto;
@@ -62,8 +66,12 @@ public class Campanha {
         this.meta = meta;
         this.doacoes = doacoes;
         this.usuarioDono = usuarioDono;
-        this.comentarios = comentarios;
         this.curtidas = curtidas;
+    }
+
+    public List<Comentario> adicionarComentario(Comentario comentario){
+        comentarios.add(comentario);
+        return comentarios;
     }
 
     public long getId() {
@@ -138,12 +146,8 @@ public class Campanha {
         this.usuarioDono = usuarioDono;
     }
 
-    public String[] getComentarios() {
+    public List<Comentario> getComentarios() {
         return this.comentarios;
-    }
-
-    public void setComentarios(String[] comentarios) {
-        this.comentarios = comentarios;
     }
 
     public int getCurtidas() {
@@ -154,4 +158,20 @@ public class Campanha {
         this.curtidas = curtidas;
     }
 
+    @Override
+    public String toString() {
+        return "Campanha{" +
+                "id=" + id +
+                ", nomeCurto='" + nomeCurto + '\'' +
+                ", identificadorURL='" + identificadorURL + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", dataLimite=" + dataLimite +
+                ", status=" + status +
+                ", meta=" + meta +
+                ", doacoes=" + Arrays.toString(doacoes) +
+                ", usuarioDono=" + usuarioDono +
+                ", comentarios=" + comentarios +
+                ", curtidas=" + curtidas +
+                '}';
+    }
 }

@@ -1,19 +1,14 @@
 package ajude.psoft.projeto.controladores;
 
 import java.util.List;
+import java.util.Optional;
 
+import ajude.psoft.projeto.entidades.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import ajude.psoft.projeto.entidades.Campanha;
-import ajude.psoft.projeto.entidades.CampanhaDTO;
 import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
@@ -33,7 +28,6 @@ public class ControladorCampanhas {
     @PostMapping("/campanhas")
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CampanhaDTO novaCampanhaDTO){
         Campanha campanhaFinal = novaCampanhaDTO.transformarParaCampanha();
-        System.out.println(campanhaFinal);
         campanhaFinal.setUsuarioDono(servicoUsuarios.retornaUsuario(novaCampanhaDTO.getEmailDono()).get());
         if (servicoCampanhas.retornaCampanhaPeloIdentificadorURL(novaCampanhaDTO.getIdentificadorURL()) != null){
             throw new ResourceBadRequestException("URL já está em uso");
@@ -54,4 +48,12 @@ public class ControladorCampanhas {
         return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca, todos), HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/campanhas/comentario/adicionar")
+    public ResponseEntity<List<Comentario>> adicionarComentario(@RequestBody ComentarioDTO novoComentario){
+        Optional<Usuario> usuario = servicoUsuarios.retornaUsuario(novoComentario.getEmail());
+
+        return new ResponseEntity<>(servicoCampanhas.adicionarComentario(novoComentario, usuario.get()), HttpStatus.CREATED);
+    }
+
+    //@DeleteMapping("/campanhas/comentario/remover")
 }

@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import ajude.psoft.projeto.entidades.*;
 import org.springframework.stereotype.Service;
 
 import ajude.psoft.projeto.daos.RepositorioCampanhas;
-import ajude.psoft.projeto.entidades.Campanha;
-import ajude.psoft.projeto.entidades.Estado;
 
 @Service
 public class ServicoCampanhas{
@@ -48,5 +47,17 @@ public class ServicoCampanhas{
         }
         return campanhasSelecionadas;
 	}
+
+	public List<Comentario> adicionarComentario(ComentarioDTO novoComentario, Usuario usuario){
+        Campanha campanha = novoComentario.getCampanha();
+        Comentario comentario = new Comentario(novoComentario, usuario);
+        //criar repositorio de comentario e dar save?
+        return campanha.adicionarComentario(comentario);
+    }
+
+//    public List<Comentario> adicionarResposta(ComentarioDTO novoComentario, Usuario usuario){
+//
+//
+//    }
 
 }

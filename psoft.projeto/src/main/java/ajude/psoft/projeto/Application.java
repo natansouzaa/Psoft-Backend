@@ -21,13 +21,14 @@ public class Application {
 		filterRB.addUrlPatterns("/pesquisa/{busca}");
 		return filterRB;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
     @Bean
     public FilterRegistrationBean corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
         config.addAllowedMethod("*");
+		config.addAllowedMethod("POST");
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);
