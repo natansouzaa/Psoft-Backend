@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import ajude.psoft.projeto.daos.RepositorioComentarios;
 import ajude.psoft.projeto.entidades.*;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import ajude.psoft.projeto.daos.RepositorioCampanhas;
 @Service
 public class ServicoCampanhas{
 
-    private RepositorioCampanhas<Campanha, Long> campanhasDAO; 
+    private RepositorioCampanhas<Campanha, Long> campanhasDAO;
+    private RepositorioComentarios<Comentario,Long> comentariosDAO;
 
     public ServicoCampanhas(RepositorioCampanhas<Campanha, Long> campanhasDAO){
         this.campanhasDAO = campanhasDAO;
@@ -51,13 +53,14 @@ public class ServicoCampanhas{
 	public List<Comentario> adicionarComentario(ComentarioDTO novoComentario, Usuario usuario){
         Campanha campanha = novoComentario.getCampanha();
         Comentario comentario = new Comentario(novoComentario, usuario);
-        //criar repositorio de comentario e dar save?
+        comentariosDAO.save(comentario);
         return campanha.adicionarComentario(comentario);
     }
 
-//    public List<Comentario> adicionarResposta(ComentarioDTO novoComentario, Usuario usuario){
-//
-//
-//    }
+    
+    public List<Comentario> adicionarResposta(ComentarioDTO novoComentario, Usuario usuario){
+
+
+    }
 
 }
