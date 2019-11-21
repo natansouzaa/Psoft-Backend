@@ -57,7 +57,7 @@ public class ServicoJWT {
 
 	public String geraToken(String email) {
 		return Jwts.builder().setSubject(email).signWith(SignatureAlgorithm.HS512, TOKEN_KEY)
-				.setExpiration(new Date(System.currentTimeMillis() + 3 * 60 * 1000)).compact();// 3 min
+				.setExpiration(new Date(System.currentTimeMillis() + 15 * 60 * 1000)).compact();// 15 min
 	}
 
 }

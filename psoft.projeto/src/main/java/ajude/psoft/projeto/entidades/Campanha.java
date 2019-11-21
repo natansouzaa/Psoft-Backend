@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -18,8 +19,6 @@ public class Campanha {
     @Id
     @GeneratedValue
     private long id;
-
-
     private String nomeCurto;
     private String identificadorURL; //sera gerado pelo frontend
     private String descricao;
@@ -30,7 +29,8 @@ public class Campanha {
     private String[] doacoes;
     @ManyToOne
     private Usuario usuarioDono;
-    private List<Comentario> comentarios = new ArrayList<>();
+    @OneToMany
+    private List<Comentario> comentarios;
     private int curtidas;
 
 
@@ -40,7 +40,7 @@ public class Campanha {
 
     public Campanha(String nomeCurto, String identificadorURL, String descricao,
                     Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
-                    int curtidas) {
+                    int curtidas, ArrayList<Comentario> comentarios) {
         super();
         this.nomeCurto = nomeCurto;
         this.identificadorURL = identificadorURL;
@@ -51,11 +51,12 @@ public class Campanha {
         this.doacoes = doacoes;
         this.usuarioDono = usuarioDono;
         this.curtidas = curtidas;
+        this.comentarios = comentarios;
     }
 
     public Campanha(long id, String nomeCurto, String identificadorURL, String descricao,
         Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
-         int curtidas) {
+         int curtidas, ArrayList<Comentario> comentarios) {
         super();
         this.id = id;
         this.nomeCurto = nomeCurto;
@@ -67,11 +68,11 @@ public class Campanha {
         this.doacoes = doacoes;
         this.usuarioDono = usuarioDono;
         this.curtidas = curtidas;
+        this.comentarios = comentarios;
     }
 
-    public List<Comentario> adicionarComentario(Comentario comentario){
+    public void adicionarComentario(Comentario comentario){
         comentarios.add(comentario);
-        return comentarios;
     }
 
     public long getId() {
@@ -148,6 +149,10 @@ public class Campanha {
 
     public List<Comentario> getComentarios() {
         return this.comentarios;
+    }
+
+    public void setComentario(ArrayList<Comentario> comentarios){
+        this.comentarios = comentarios;
     }
 
     public int getCurtidas() {

@@ -21,7 +21,6 @@ public class ServicoCampanhas{
     }
 
     public Campanha adicionaCampanha(Campanha campanha){
-        System.out.println(campanha);
         return this.campanhasDAO.save(campanha);
     }
 
@@ -50,17 +49,14 @@ public class ServicoCampanhas{
         return campanhasSelecionadas;
 	}
 
-	public List<Comentario> adicionarComentario(ComentarioDTO novoComentario, Usuario usuario){
-        Campanha campanha = novoComentario.getCampanha();
-        Comentario comentario = new Comentario(novoComentario, usuario);
-        comentariosDAO.save(comentario);
-        return campanha.adicionarComentario(comentario);
+	public Comentario adicionarComentario(Comentario novoComentario){
+        return this.comentariosDAO.save(novoComentario);
     }
 
 
-    public List<Comentario> adicionarResposta(ComentarioDTO novoComentario, Usuario usuario){
+    // public List<Comentario> adicionarResposta(ComentarioDTO novoComentario, Usuario usuario){
 
 
-    }
+    // }
 
 }

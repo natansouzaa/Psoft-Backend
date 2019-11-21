@@ -1,7 +1,6 @@
 package ajude.psoft.projeto.controladores;
 
 import java.util.List;
-import java.util.Optional;
 
 import ajude.psoft.projeto.entidades.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,16 +42,17 @@ public class ControladorCampanhas {
         return new ResponseEntity<Campanha>(servicoCampanhas.retornaCampanhaPeloIdentificadorURL(identificadorURL), HttpStatus.ACCEPTED);
     }    
 
-    @GetMapping("/pesquisa/{busca}")
+    @GetMapping("/campanhas/pesquisa/{busca}")
     public ResponseEntity<List<Campanha>> retornaCampanhasPelaBusca(@PathVariable("busca") String busca, @RequestParam(value="todos", required = false) Boolean todos){
         return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca, todos), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/campanhas/comentario/adicionar")
-    public ResponseEntity<List<Comentario>> adicionarComentario(@RequestBody ComentarioDTO novoComentario){
-        Optional<Usuario> usuario = servicoUsuarios.retornaUsuario(novoComentario.getEmail());
-
-        return new ResponseEntity<>(servicoCampanhas.adicionarComentario(novoComentario, usuario.get()), HttpStatus.CREATED);
+    @PostMapping("/campanhas/comentario/adicionarComentario")
+    public ResponseEntity<Comentario> adicionarComentario(@RequestBody ComentarioDTO comentarioDTO){
+        Comentario comentarioFinal = comentarioDTO.transformaParaComentario();
+        comentarioFinal.setUsuario(servicoUsuarios.retornaUsuario(comentarioDTO.getEmailDono()).get());
+        comentarioFinal.setCampanha(servicoCampanhas.retornaCampanha(comentarioDTO.getIdCampanha()).get());
+        return new ResponseEntity<Comentario>(servicoCampanhas.adicionarComentario(comentarioFinal), HttpStatus.CREATED);
     }
 
     //@DeleteMapping("/campanhas/comentario/remover")

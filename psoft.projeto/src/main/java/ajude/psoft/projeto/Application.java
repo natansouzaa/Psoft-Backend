@@ -17,8 +17,7 @@ public class Application {
 	public FilterRegistrationBean<FiltroToken> filterJwt() {
 		FilterRegistrationBean<FiltroToken> filterRB = new FilterRegistrationBean<FiltroToken>();
 		filterRB.setFilter(new FiltroToken());
-		filterRB.addUrlPatterns("/campanhas");
-		filterRB.addUrlPatterns("/pesquisa/{busca}");
+		filterRB.addUrlPatterns("/campanhas/*");
 		return filterRB;
 	}
 
@@ -28,7 +27,6 @@ public class Application {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
         config.addAllowedMethod("*");
-		config.addAllowedMethod("POST");
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);
