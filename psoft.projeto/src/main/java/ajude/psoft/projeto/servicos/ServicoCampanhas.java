@@ -18,6 +18,13 @@ public class ServicoCampanhas{
         this.campanhasDAO = campanhasDAO;
     }
 
+    public List<Comentario> adicionarComentario(Comentario comentario){
+        Campanha campanhaAux = comentario.getCampanha();
+        Campanha campanha = this.campanhasDAO.findById(campanhaAux.getId()).get();
+        campanha.adicionarComentario(comentario);
+        return this.campanhasDAO.save(campanha).getComentarios();
+    }
+
     public Campanha adicionaCampanha(Campanha campanha){
         return this.campanhasDAO.save(campanha);
     }

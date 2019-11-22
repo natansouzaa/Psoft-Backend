@@ -38,7 +38,7 @@ public class ServicoJWT {
 		return optUsuario.isPresent() && optUsuario.get().getEmail().equals(email);
 	}
 
-	private String getSujeitoDoToken(String authorizationHeader){
+	public String getSujeitoDoToken(String authorizationHeader){
 		if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
 			throw new ResourceUnauthorizedException("Token inexistente ou mal formatado!");
 		}

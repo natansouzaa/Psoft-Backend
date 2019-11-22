@@ -55,6 +55,10 @@ public class Comentario {
         this.campanha = campanha;
     }
 
+    public void adicionarResposta(Comentario resposta){
+        this.respostas.add(resposta);
+    }
+
     public long getId() {
         return this.id;
     }
