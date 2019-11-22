@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Comentario {
@@ -26,6 +28,7 @@ public class Comentario {
     private List<Comentario> respostas;
     @Temporal(TemporalType.DATE)
     private Date dataPostagem;
+    @JsonIgnore
     @ManyToOne
     private Campanha campanha;
 

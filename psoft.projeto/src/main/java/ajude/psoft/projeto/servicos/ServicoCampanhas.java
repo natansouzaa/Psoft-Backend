@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import ajude.psoft.projeto.daos.RepositorioComentarios;
 import ajude.psoft.projeto.entidades.*;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import ajude.psoft.projeto.daos.RepositorioCampanhas;
 public class ServicoCampanhas{
 
     private RepositorioCampanhas<Campanha, Long> campanhasDAO;
-    private RepositorioComentarios<Comentario,Long> comentariosDAO;
 
     public ServicoCampanhas(RepositorioCampanhas<Campanha, Long> campanhasDAO){
         this.campanhasDAO = campanhasDAO;
@@ -48,15 +46,5 @@ public class ServicoCampanhas{
         }
         return campanhasSelecionadas;
 	}
-
-	public Comentario adicionarComentario(Comentario novoComentario){
-        return this.comentariosDAO.save(novoComentario);
-    }
-
-
-    // public List<Comentario> adicionarResposta(ComentarioDTO novoComentario, Usuario usuario){
-
-
-    // }
 
 }

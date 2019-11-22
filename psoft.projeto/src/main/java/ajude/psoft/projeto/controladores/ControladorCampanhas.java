@@ -44,16 +44,10 @@ public class ControladorCampanhas {
 
     @GetMapping("/campanhas/pesquisa/{busca}")
     public ResponseEntity<List<Campanha>> retornaCampanhasPelaBusca(@PathVariable("busca") String busca, @RequestParam(value="todos", required = false) Boolean todos){
+        if (servicoCampanhas.retornaCampanhasPelaBusca(busca, todos).size() == 0){
+            throw new ResourceBadRequestException("Nenhum resultado encontrado");
+        }
         return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca, todos), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/campanhas/comentario/adicionarComentario")
-    public ResponseEntity<Comentario> adicionarComentario(@RequestBody ComentarioDTO comentarioDTO){
-        Comentario comentarioFinal = comentarioDTO.transformaParaComentario();
-        comentarioFinal.setUsuario(servicoUsuarios.retornaUsuario(comentarioDTO.getEmailDono()).get());
-        comentarioFinal.setCampanha(servicoCampanhas.retornaCampanha(comentarioDTO.getIdCampanha()).get());
-        return new ResponseEntity<Comentario>(servicoCampanhas.adicionarComentario(comentarioFinal), HttpStatus.CREATED);
-    }
-
-    //@DeleteMapping("/campanhas/comentario/remover")
 }

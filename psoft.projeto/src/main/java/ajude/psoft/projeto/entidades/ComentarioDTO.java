@@ -12,13 +12,13 @@ public class ComentarioDTO {
     private String emailDono;
     @Temporal(TemporalType.DATE)
     private Date dataPostagem;
-    private long idCampanha;
+    private long id;
 
-    public ComentarioDTO(String texto, String emailDono, Date dataPostagem, Long idCampanha) {
+    public ComentarioDTO(String texto, String emailDono, Date dataPostagem, Long id) {
         this.texto = texto;
         this.emailDono = emailDono;
         this.dataPostagem = dataPostagem;
-        this.idCampanha = idCampanha;
+        this.id = id;
     }
 
     public Comentario transformaParaComentario(){
@@ -53,12 +53,12 @@ public class ComentarioDTO {
         this.dataPostagem = dataPostagem;
     }
 
-    public long getIdCampanha() {
-        return this.idCampanha;
+    public long getId() {
+        return this.id;
     }
 
-    public void setIdCampanha(long idCampanha) {
-        this.idCampanha = idCampanha;
+    public void setIdCampanha(long id) {
+        this.id = id;
     }
 
 }
