@@ -32,6 +32,7 @@ public class ControladorComentarios {
 
     @PostMapping("/comentarios/adicionarComentario")
     public ResponseEntity<List<Comentario>> adicionarComentario(@RequestBody ComentarioDTO comentarioDTO, @RequestHeader("Authorization") String header){
+        System.out.println(comentarioDTO);
         String email = this.jwtService.getSujeitoDoToken(header);
         Comentario comentarioFinal = comentarioDTO.transformaParaComentario();
         comentarioFinal.setUsuario(servicoUsuarios.retornaUsuario(email).get());

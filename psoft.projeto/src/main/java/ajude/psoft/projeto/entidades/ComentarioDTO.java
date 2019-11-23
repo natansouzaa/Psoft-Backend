@@ -11,9 +11,9 @@ public class ComentarioDTO {
     private String texto;
     @Temporal(TemporalType.DATE)
     private Date dataPostagem;
-    private long id;
+    private String id;
 
-    public ComentarioDTO(String texto, Date dataPostagem, Long id) {
+    public ComentarioDTO(String texto, Date dataPostagem, String id) {
         this.texto = texto;
         this.dataPostagem = dataPostagem;
         this.id = id;
@@ -44,11 +44,19 @@ public class ComentarioDTO {
     }
 
     public long getId() {
-        return this.id;
+        return Long.parseLong(this.id);
     }
 
-    public void setIdCampanha(long id) {
+    public void setIdCampanha(String id) {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "ComentarioDTO{" +
+                "texto='" + texto + '\'' +
+                ", dataPostagem=" + dataPostagem +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }
