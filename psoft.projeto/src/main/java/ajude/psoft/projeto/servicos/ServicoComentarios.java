@@ -1,7 +1,6 @@
 package ajude.psoft.projeto.servicos;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -26,8 +25,19 @@ public class ServicoComentarios {
         return this.comentariosDAO.save(comentarioPai).getRespostas();
     }
 
+    public List<Comentario> removerResposta(Comentario resposta){
+        resposta.removerResposta();
+        return this.comentariosDAO.findAll();
+    }
+
 	public Comentario retornaComentario(long id) {
 		return this.comentariosDAO.findById(id).get();
-	}
+    }
+    
+    public Comentario removerComentario(Comentario comentario){
+        Comentario comentarioOf = this.comentariosDAO.findById(comentario.getId()).get();
+        comentarioOf.setTexto("Comentario excluido");
+        return comentarioOf;
+    }
 
 }

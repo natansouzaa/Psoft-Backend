@@ -59,6 +59,10 @@ public class Comentario {
         this.respostas.add(resposta);
     }
 
+    public void removerResposta(){
+        this.setTexto("Resposta excluida");
+    }
+
     public long getId() {
         return this.id;
     }

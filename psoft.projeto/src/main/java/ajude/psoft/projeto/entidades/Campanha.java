@@ -75,6 +75,15 @@ public class Campanha {
         comentarios.add(comentario);
     }
 
+    public void removerComentario(Comentario comentario){
+        for (Comentario c: this.comentarios){
+            if (c.getId() == comentario.getId()){
+                c.setTexto("Comentario excluido");
+                break;
+            }
+        }
+    }
+
     public long getId() {
         return this.id;
     }
