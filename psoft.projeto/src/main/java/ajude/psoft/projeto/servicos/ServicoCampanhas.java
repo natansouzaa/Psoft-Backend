@@ -8,14 +8,17 @@ import ajude.psoft.projeto.entidades.*;
 import org.springframework.stereotype.Service;
 
 import ajude.psoft.projeto.daos.RepositorioCampanhas;
+import ajude.psoft.projeto.daos.RepositorioCurtidas;
 
 @Service
 public class ServicoCampanhas{
 
     private RepositorioCampanhas<Campanha, Long> campanhasDAO;
+    private RepositorioCurtidas<Curtida, Long> curtidasDAO;
 
-    public ServicoCampanhas(RepositorioCampanhas<Campanha, Long> campanhasDAO){
+    public ServicoCampanhas(RepositorioCampanhas<Campanha, Long> campanhasDAO, RepositorioCurtidas<Curtida, Long> curtidasDAO){
         this.campanhasDAO = campanhasDAO;
+        this.curtidasDAO = curtidasDAO;
     }
 
     public List<Comentario> adicionarComentario(Comentario comentario){
@@ -29,7 +32,7 @@ public class ServicoCampanhas{
         Campanha campanhaAux = comentario.getCampanha();
         Campanha campanha = this.campanhasDAO.findById(campanhaAux.getId()).get();
         campanha.removerComentario(comentario);
-        return this.campanhasDAO.save(campanha).getComentarios(); //seraaaaaaaaa?
+        return this.campanhasDAO.save(campanha).getComentarios();
 	}
 
     public Campanha adicionaCampanha(Campanha campanha){
@@ -60,5 +63,22 @@ public class ServicoCampanhas{
         }
         return campanhasSelecionadas;
 	}
+
+    public Campanha relacaoCurtida(Campanha campanha, Usuario usuario){
+        Campanha campanhaFinal = this.campanhasDAO.findById(campanha.getId()).get();
+        for (Curtida c: campanhaFinal.getCurtidas()){
+            if (c.getUsuario().equals(usuario)){
+                campanhaFinal.removerCurtida(c);
+                this.curtidasDAO.delete(c);
+                return campanhaFinal;
+            }
+        }
+
+        Curtida curtida = new Curtida(usuario);
+        this.curtidasDAO.save(curtida);
+        campanhaFinal.adicionarCurtida(curtida);
+        return this.campanhasDAO.save(campanhaFinal);
+        //return campanhaFinal;
+    }
 
 }

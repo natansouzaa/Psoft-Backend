@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ajude.psoft.projeto.entidades.Comentario;
 import ajude.psoft.projeto.entidades.ComentarioDTO;
-import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.erros.ResourceUnauthorizedException;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoComentarios;

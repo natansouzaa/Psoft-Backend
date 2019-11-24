@@ -31,7 +31,8 @@ public class Campanha {
     private Usuario usuarioDono;
     @OneToMany
     private List<Comentario> comentarios;
-    private int curtidas;
+    @OneToMany
+    private List<Curtida> curtidas;
 
 
     public Campanha() {
@@ -40,7 +41,7 @@ public class Campanha {
 
     public Campanha(String nomeCurto, String identificadorURL, String descricao,
                     Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
-                    int curtidas, ArrayList<Comentario> comentarios) {
+                    ArrayList<Curtida> curtidas, ArrayList<Comentario> comentarios) {
         super();
         this.nomeCurto = nomeCurto;
         this.identificadorURL = identificadorURL;
@@ -55,8 +56,8 @@ public class Campanha {
     }
 
     public Campanha(long id, String nomeCurto, String identificadorURL, String descricao,
-        Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
-         int curtidas, ArrayList<Comentario> comentarios) {
+                    Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
+                    ArrayList<Curtida> curtidas, ArrayList<Comentario> comentarios) {
         super();
         this.id = id;
         this.nomeCurto = nomeCurto;
@@ -69,6 +70,14 @@ public class Campanha {
         this.usuarioDono = usuarioDono;
         this.curtidas = curtidas;
         this.comentarios = comentarios;
+    }
+
+    public void adicionarCurtida(Curtida curtida){
+        this.curtidas.add(curtida);
+    }
+
+    public void removerCurtida(Curtida curtida){
+        this.curtidas.remove(curtida);
     }
 
     public void adicionarComentario(Comentario comentario){
@@ -164,11 +173,11 @@ public class Campanha {
         this.comentarios = comentarios;
     }
 
-    public int getCurtidas() {
+    public List<Curtida> getCurtidas() {
         return this.curtidas;
     }
 
-    public void setCurtidas(int curtidas) {
+    public void setCurtidas(ArrayList<Curtida> curtidas) {
         this.curtidas = curtidas;
     }
 

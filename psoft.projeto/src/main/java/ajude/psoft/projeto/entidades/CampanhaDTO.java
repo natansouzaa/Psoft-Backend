@@ -1,5 +1,6 @@
 package ajude.psoft.projeto.entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Temporal;
@@ -28,7 +29,7 @@ public class CampanhaDTO {
         Campanha retorno = new Campanha();
         retorno.setDataLimite(this.getDataLimite());
         retorno.setDescricao(this.getDescricao());
-        retorno.setCurtidas(0);
+        retorno.setCurtidas(new ArrayList<Curtida>());
         retorno.setIdentificadorURL(this.getIdentificadorURL());
         retorno.setMeta(this.getMeta());
         retorno.setNomeCurto(this.getNomeCurto());

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
+import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
 
 @RestController
@@ -19,6 +20,8 @@ public class ControladorCampanhas {
     private ServicoCampanhas servicoCampanhas;
     @Autowired
     private ServicoUsuarios servicoUsuarios;
+    @Autowired
+    private ServicoJWT jwtService;
 
     // Adiciona uma campanha com id, nome curto, URL único da campanha(gerado pelo frontend a partir do nome curto)
     //descrição, deadline (data) para arrecadação, status da campanha, meta (reais), doações, usuário dono, comentários
@@ -48,6 +51,14 @@ public class ControladorCampanhas {
             throw new ResourceBadRequestException("Nenhum resultado encontrado");
         }
         return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca, todos), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/campanhas/curtida/{id}")
+    public ResponseEntity<Campanha> relacaoCurtida(@PathVariable ("id") long id, @RequestHeader("Authorization") String header){
+        String email = this.jwtService.getSujeitoDoToken(header);
+        Usuario usuario = this.servicoUsuarios.retornaUsuario(email).get();
+        Campanha campanha = this.servicoCampanhas.retornaCampanha(id).get();
+        return new ResponseEntity<Campanha>(this.servicoCampanhas.relacaoCurtida(campanha, usuario), HttpStatus.ACCEPTED);
     }
 
 }
