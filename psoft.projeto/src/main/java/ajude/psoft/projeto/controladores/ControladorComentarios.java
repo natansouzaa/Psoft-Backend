@@ -65,4 +65,6 @@ public class ControladorComentarios {
         return new ResponseEntity<List<Comentario>>(this.servicoCampanhas.removerComentario(comentario), HttpStatus.CREATED);
     }
 
+    //Implementar os outros caso em um novo controlador de likes
+
 }
