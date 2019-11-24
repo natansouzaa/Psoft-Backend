@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import ajude.psoft.projeto.entidades.*;
+
 import org.springframework.stereotype.Service;
 
 import ajude.psoft.projeto.daos.RepositorioCampanhas;
@@ -78,7 +79,16 @@ public class ServicoCampanhas{
         this.curtidasDAO.save(curtida);
         campanhaFinal.adicionarCurtida(curtida);
         return this.campanhasDAO.save(campanhaFinal);
-        //return campanhaFinal;
     }
+
+	public List<Campanha> retornaCampanhasUsuario(Usuario usuario) {
+        List<Campanha> resultado = new ArrayList<Campanha>();
+        for (Campanha c: this.campanhasDAO.findAll()){
+            if (c.getUsuarioDono().equals(usuario)){
+                resultado.add(c);
+            }
+        }
+		return resultado;
+	}
 
 }
