@@ -46,7 +46,7 @@ public class ControladorUsuarios {
         
     }
 
-    @GetMapping("/usuarios/campanhas/{email}")
+    @GetMapping("/usuarios/campanhas/criadas/{email}")
     public ResponseEntity<List<Campanha>> retornaCampanhasUsuario(@PathVariable ("email") String email){
         Usuario usuario;
         try {
@@ -56,5 +56,7 @@ public class ControladorUsuarios {
         }
         return new ResponseEntity<List<Campanha>>(this.servicoCampanhas.retornaCampanhasUsuario(usuario), HttpStatus.OK);
     }
+
+    //as campanhas contribuicoes ficaram aqui
 
 }

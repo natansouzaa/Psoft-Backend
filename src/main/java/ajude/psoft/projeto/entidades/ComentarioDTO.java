@@ -24,7 +24,6 @@ public class ComentarioDTO {
         retorno.setTexto(this.texto);
         retorno.setDataPostagem(this.dataPostagem);
         retorno.setRespostas(new ArrayList<>());
-        // retorno.setEstado(true);
         return retorno;
     }
 

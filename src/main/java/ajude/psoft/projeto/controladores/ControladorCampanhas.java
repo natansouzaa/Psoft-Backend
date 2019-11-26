@@ -46,11 +46,11 @@ public class ControladorCampanhas {
     }    
 
     @GetMapping("/campanhas/pesquisa/{busca}")
-    public ResponseEntity<List<Campanha>> retornaCampanhasPelaBusca(@PathVariable("busca") String busca, @RequestParam(value="todos", required = false) Boolean todos){
-        if (servicoCampanhas.retornaCampanhasPelaBusca(busca, todos).size() == 0){
+    public ResponseEntity<List<Campanha>> retornaCampanhasPelaBusca(@PathVariable("busca") String busca){
+        if (servicoCampanhas.retornaCampanhasPelaBusca(busca).size() == 0){
             throw new ResourceBadRequestException("Nenhum resultado encontrado");
         }
-        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca, todos), HttpStatus.ACCEPTED);
+        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/campanhas/curtida/{id}")
@@ -59,6 +59,15 @@ public class ControladorCampanhas {
         Usuario usuario = this.servicoUsuarios.retornaUsuario(email).get();
         Campanha campanha = this.servicoCampanhas.retornaCampanha(id).get();
         return new ResponseEntity<Campanha>(this.servicoCampanhas.relacaoCurtida(campanha, usuario), HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/campanhas/edicao")
+    public ResponseEntity<Campanha> editaCampanha(@RequestBody EditaCampanha editaCampanha){
+        Campanha campanha = this.servicoCampanhas.retornaCampanhaPeloIdentificadorURL(editaCampanha.getIdentificadorURL());
+        if (campanha == null){
+            throw new ResourceBadRequestException("URL inválida");
+        }
+        return new ResponseEntity<Campanha>(this.servicoCampanhas.editaCampanha(campanha, editaCampanha.getNovaDescricao()), HttpStatus.OK);
     }
 
 }

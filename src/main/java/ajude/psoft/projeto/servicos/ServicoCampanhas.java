@@ -48,18 +48,12 @@ public class ServicoCampanhas{
 		return this.campanhasDAO.findByidentificadorURL(identificadorURL);
 	}
 
-	public List<Campanha> retornaCampanhasPelaBusca(String busca, Boolean todos) {
+	public List<Campanha> retornaCampanhasPelaBusca(String busca) {
         List<Campanha> todasAsCampanhas = this.campanhasDAO.findAll();
         List<Campanha> campanhasSelecionadas = new ArrayList<Campanha>();
         for (Campanha campanha : todasAsCampanhas) {
             if (campanha.getNomeCurto().toLowerCase().contains(busca.toLowerCase())){
-                if (todos){
-                    campanhasSelecionadas.add(campanha);
-                } else {
-                    if (campanha.getStatus() == Estado.ATIVA){
-                        campanhasSelecionadas.add(campanha);
-                    }
-                }
+                campanhasSelecionadas.add(campanha);
             }
         }
         return campanhasSelecionadas;
@@ -89,6 +83,12 @@ public class ServicoCampanhas{
             }
         }
 		return resultado;
+	}
+
+	public Campanha editaCampanha(Campanha campanha, String novaDescricao) {
+        Campanha campanhaSujeito = this.campanhasDAO.findById(campanha.getId()).get();
+        campanhaSujeito.setDescricao(novaDescricao);
+        return this.campanhasDAO.save(campanhaSujeito);
 	}
 
 }
