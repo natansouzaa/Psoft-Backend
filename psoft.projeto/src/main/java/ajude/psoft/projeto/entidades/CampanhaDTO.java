@@ -27,6 +27,7 @@ public class CampanhaDTO {
 
     public Campanha transformarParaCampanha(){
         Campanha retorno = new Campanha();
+        this.dataLimite.setDate(this.dataLimite.getDate() + 1);
         retorno.setDataLimite(this.getDataLimite());
         retorno.setDescricao(this.getDescricao());
         retorno.setCurtidas(new ArrayList<Curtida>());

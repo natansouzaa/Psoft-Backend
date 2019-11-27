@@ -1,7 +1,5 @@
 package ajude.psoft.projeto.servicos;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import ajude.psoft.projeto.daos.RepositorioDoacoes;
@@ -17,12 +15,10 @@ public class ServicoDoacoes {
         this.doacoesDAO = doacoesDAO;
     }
 
-	public List<Doacao> realizaDoacao(Doacao doacaoFinal) {
+	public Campanha realizaDoacao(Doacao doacaoFinal) {
         Campanha campanha = doacaoFinal.getCampanha();
         campanha.realizaDoacao(doacaoFinal);
-        this.doacoesDAO.save(doacaoFinal);
-        return this.doacoesDAO.findAll();
-        
+        return this.doacoesDAO.save(doacaoFinal).getCampanha();
 	}
 
 }

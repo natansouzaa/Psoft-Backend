@@ -116,7 +116,7 @@ public class ServicoCampanhas{
     public void modificaStatusCampanhas(){
         Date dataAtual = new Date();
         for (Campanha c: this.campanhasDAO.findAll()){
-            if (dataAtual.getTime() > c.getDataLimite().getTime()){
+            if (dataAtual.compareTo(c.getDataLimite()) > 1) {
                 if (c.getArrecadado() > c.getMeta()){
                     c.setStatus(Estado.CONCLUIDA);
                     this.campanhasDAO.save(c);

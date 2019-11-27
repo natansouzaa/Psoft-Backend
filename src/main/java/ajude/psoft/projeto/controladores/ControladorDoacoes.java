@@ -28,13 +28,13 @@ public class ControladorDoacoes {
     private ServicoDoacoes servicoDoacoes;
 
     @PostMapping("/doacoes")
-    public ResponseEntity<List<Doacao>> realizaDoacao(@RequestBody DoacaoDTO doacaoDTO){
+    public ResponseEntity<Campanha> realizaDoacao(@RequestBody DoacaoDTO doacaoDTO){
         Doacao doacaoFinal = doacaoDTO.transformaParaDoacao();
         Usuario usuario = this.servicoUsuarios.retornaUsuario(doacaoDTO.getEmailDono()).get();
         Campanha campanha = this.servicoCampanhas.retornaCampanha(doacaoDTO.getIdCampanha()).get();
         doacaoFinal.setCampanha(campanha);
         doacaoFinal.setUsuario(usuario);
-        return new ResponseEntity<List<Doacao>>(this.servicoDoacoes.realizaDoacao(doacaoFinal), HttpStatus.OK);
+        return new ResponseEntity<Campanha>(this.servicoDoacoes.realizaDoacao(doacaoFinal), HttpStatus.OK);
     }
 
 }
