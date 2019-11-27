@@ -34,6 +34,7 @@ public class CampanhaDTO {
         retorno.setMeta(this.getMeta());
         retorno.setNomeCurto(this.getNomeCurto());
         retorno.setStatus(Estado.ATIVA);
+        retorno.setArrecadado(0);
         return retorno;
     }
 

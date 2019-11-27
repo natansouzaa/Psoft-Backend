@@ -46,14 +46,14 @@ public class ControladorCampanhas {
     }    
 
     @GetMapping("/campanhas/pesquisa/{busca}")
-    public ResponseEntity<List<Campanha>> retornaCampanhasPelaBusca(@PathVariable("busca") String busca){
-        if (servicoCampanhas.retornaCampanhasPelaBusca(busca).size() == 0){
+    public ResponseEntity<List<Campanha>> retornaCampanhasPelaBusca(@PathVariable("busca") String busca, @RequestParam(value="todos", required = false) Boolean todos){
+        if (servicoCampanhas.retornaCampanhasPelaBusca(busca, todos).size() == 0){
             throw new ResourceBadRequestException("Nenhum resultado encontrado");
         }
-        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca), HttpStatus.ACCEPTED);
+        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca, todos), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/campanhas/curtida/{id}")
+    @PostMapping("/campanhas/curtida/{id}")
     public ResponseEntity<Campanha> relacaoCurtida(@PathVariable ("id") long id, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
         Usuario usuario = this.servicoUsuarios.retornaUsuario(email).get();
@@ -68,6 +68,21 @@ public class ControladorCampanhas {
             throw new ResourceBadRequestException("URL inválida");
         }
         return new ResponseEntity<Campanha>(this.servicoCampanhas.editaCampanha(campanha, editaCampanha.getNovaDescricao()), HttpStatus.OK);
+    }
+
+    @GetMapping("/ordenacao/meta")
+    public ResponseEntity<List<Campanha>> retornaCampanhasPelaMeta(){
+        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaMeta(), HttpStatus.OK);
+    }
+
+    @GetMapping("/ordenacao/data")
+    public ResponseEntity<List<Campanha>> retornaCampanhasPelaData(){
+        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaData(), HttpStatus.OK);
+    }
+
+    @GetMapping("/ordenacao/curtida")
+    public ResponseEntity<List<Campanha>> retornaCampanhasPelaCurtida(){
+        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaCurtida(), HttpStatus.OK);
     }
 
 }

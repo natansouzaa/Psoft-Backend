@@ -82,9 +82,6 @@ public class Campanha {
         }
         this.doacoes.add(doacao);
         this.arrecadado += doacao.getValorDoado();
-        if (this.arrecadado >= this.meta){
-            this.setStatus(Estado.CONCLUIDA);
-        }
     }
 
     public void adicionarCurtida(Curtida curtida){

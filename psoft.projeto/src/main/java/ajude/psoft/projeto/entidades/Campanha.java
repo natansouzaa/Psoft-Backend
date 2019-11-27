@@ -1,7 +1,6 @@
 package ajude.psoft.projeto.entidades;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import ajude.psoft.projeto.erros.ResourceBadRequestException;
 
 @Entity
 public class Campanha {
@@ -25,23 +26,24 @@ public class Campanha {
     @Temporal(TemporalType.DATE)
     private Date dataLimite;
     private Estado status;
+    private float arrecadado;
     private float meta;
-    private String[] doacoes;
     @ManyToOne
     private Usuario usuarioDono;
     @OneToMany
     private List<Comentario> comentarios;
     @OneToMany
     private List<Curtida> curtidas;
-
+    @OneToMany
+    private List<Doacao> doacoes;
 
     public Campanha() {
         super();
     }
 
     public Campanha(String nomeCurto, String identificadorURL, String descricao,
-                    Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
-                    ArrayList<Curtida> curtidas, ArrayList<Comentario> comentarios) {
+                    Date dataLimite, Estado status, float meta, ArrayList<Doacao> doacoes, Usuario usuarioDono,
+                    ArrayList<Curtida> curtidas, ArrayList<Comentario> comentarios, float arrecadado) {
         super();
         this.nomeCurto = nomeCurto;
         this.identificadorURL = identificadorURL;
@@ -53,11 +55,12 @@ public class Campanha {
         this.usuarioDono = usuarioDono;
         this.curtidas = curtidas;
         this.comentarios = comentarios;
+        this.arrecadado = arrecadado;
     }
 
     public Campanha(long id, String nomeCurto, String identificadorURL, String descricao,
-                    Date dataLimite, Estado status, float meta, String[] doacoes, Usuario usuarioDono,
-                    ArrayList<Curtida> curtidas, ArrayList<Comentario> comentarios) {
+                    Date dataLimite, Estado status, float meta, ArrayList<Doacao> doacoes, Usuario usuarioDono,
+                    ArrayList<Curtida> curtidas, ArrayList<Comentario> comentarios, float arrecadado) {
         super();
         this.id = id;
         this.nomeCurto = nomeCurto;
@@ -70,6 +73,15 @@ public class Campanha {
         this.usuarioDono = usuarioDono;
         this.curtidas = curtidas;
         this.comentarios = comentarios;
+        this.arrecadado = arrecadado;
+    }
+
+    public void realizaDoacao(Doacao doacao){
+        if (this.getStatus().equals(Estado.ENCERRADA) || this.getStatus().equals(Estado.VENCIDA) || this.getStatus().equals(Estado.CONCLUIDA)){
+            throw new ResourceBadRequestException("Esta campanha não está mais disponível para receber doações");
+        }
+        this.doacoes.add(doacao);
+        this.arrecadado += doacao.getValorDoado();
     }
 
     public void adicionarCurtida(Curtida curtida){
@@ -87,7 +99,7 @@ public class Campanha {
     public void removerComentario(Comentario comentario){
         for (Comentario c: this.comentarios){
             if (c.getId() == comentario.getId()){
-                c.setTexto("Comentario excluido");
+                c.setTexto("");
                 break;
             }
         }
@@ -149,11 +161,19 @@ public class Campanha {
         this.meta = meta;
     }
 
-    public String[] getDoacoes() {
+    public float getArrecadado() {
+        return this.arrecadado;
+    }
+
+    public void setArrecadado(float arrecadado) {
+        this.arrecadado = arrecadado;
+    }
+
+    public List<Doacao> getDoacoes() {
         return this.doacoes;
     }
 
-    public void setDoacoes(String[] doacoes) {
+    public void setDoacoes(ArrayList<Doacao> doacoes) {
         this.doacoes = doacoes;
     }
 
@@ -191,7 +211,7 @@ public class Campanha {
                 ", dataLimite=" + dataLimite +
                 ", status=" + status +
                 ", meta=" + meta +
-                ", doacoes=" + Arrays.toString(doacoes) +
+                ", doacoes=" + doacoes +
                 ", usuarioDono=" + usuarioDono +
                 ", comentarios=" + comentarios +
                 ", curtidas=" + curtidas +

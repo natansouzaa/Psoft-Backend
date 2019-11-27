@@ -57,13 +57,11 @@ public class ControladorComentarios {
     public ResponseEntity<List<Comentario>> removerComentario(@PathVariable ("id") long id, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
         Comentario comentario = servicoComentarios.retornaComentario(id);
-        if (!email.equals(comentario.getUsuario().getEmail())){
-            throw new ResourceUnauthorizedException("voce nao esta autorizado a remover o comentario de outro usuario");
+        if (email != (comentario.getUsuario().getEmail())){
+            throw new ResourceUnauthorizedException("Você não está autorizado a remover o comentário de outro usuário");
         }
         this.servicoComentarios.removerComentario(comentario);
         return new ResponseEntity<List<Comentario>>(this.servicoCampanhas.removerComentario(comentario), HttpStatus.CREATED);
     }
-
-    //Implementar os outros caso em um novo controlador de likes
 
 }

@@ -53,12 +53,36 @@ public class ControladorCampanhas {
         return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaBusca(busca, todos), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/campanhas/curtida/{id}")
+    @PostMapping("/campanhas/curtida/{id}")
     public ResponseEntity<Campanha> relacaoCurtida(@PathVariable ("id") long id, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
         Usuario usuario = this.servicoUsuarios.retornaUsuario(email).get();
         Campanha campanha = this.servicoCampanhas.retornaCampanha(id).get();
         return new ResponseEntity<Campanha>(this.servicoCampanhas.relacaoCurtida(campanha, usuario), HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/campanhas/edicao")
+    public ResponseEntity<Campanha> editaCampanha(@RequestBody EditaCampanha editaCampanha){
+        Campanha campanha = this.servicoCampanhas.retornaCampanhaPeloIdentificadorURL(editaCampanha.getIdentificadorURL());
+        if (campanha == null){
+            throw new ResourceBadRequestException("URL inválida");
+        }
+        return new ResponseEntity<Campanha>(this.servicoCampanhas.editaCampanha(campanha, editaCampanha.getNovaDescricao()), HttpStatus.OK);
+    }
+
+    @GetMapping("/ordenacao/meta")
+    public ResponseEntity<List<Campanha>> retornaCampanhasPelaMeta(){
+        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaMeta(), HttpStatus.OK);
+    }
+
+    @GetMapping("/ordenacao/data")
+    public ResponseEntity<List<Campanha>> retornaCampanhasPelaData(){
+        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaData(), HttpStatus.OK);
+    }
+
+    @GetMapping("/ordenacao/curtida")
+    public ResponseEntity<List<Campanha>> retornaCampanhasPelaCurtida(){
+        return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaCurtida(), HttpStatus.OK);
     }
 
 }
