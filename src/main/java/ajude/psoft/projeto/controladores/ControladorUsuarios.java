@@ -6,10 +6,12 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ajude.psoft.projeto.entidades.Campanha;
@@ -17,6 +19,8 @@ import ajude.psoft.projeto.entidades.Usuario;
 import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Controlador que administra as rotas que envolvem os usuários, consegue concluir os pedidos que são
@@ -24,7 +28,10 @@ import ajude.psoft.projeto.servicos.ServicoUsuarios;
  * 
  * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
  */
+@CrossOrigin(origins = "*")
 @RestController
+@RequestMapping(value="")
+@Api(value="API REST de Financiamento coletivo")
 public class ControladorUsuarios {
 
     //Inicializando os serviços de campanhas e usuarios automaticamente. 
@@ -41,6 +48,7 @@ public class ControladorUsuarios {
      * @return ResponseEntity<Usuario> entidade de resposta que representa um usuário
      */
     @PostMapping("/usuarios")
+    @ApiOperation(value="Cadastra um usuário")
     public ResponseEntity<Usuario> adicionaUsuario(@RequestBody Usuario novoUsuario){
         if (servicoUsuarios.existeNoDAO(novoUsuario.getEmail())){
             throw new ResourceBadRequestException("Email já cadastrado");
@@ -54,6 +62,7 @@ public class ControladorUsuarios {
      * @return ResponseEntity<Usuario> entidade de resposta que representa um usuário
      */
     @GetMapping("/usuarios/{username}")
+    @ApiOperation(value="Retorna um usuário pelo email")
     public ResponseEntity<Usuario> retornaUsuarioPeloUsername(@PathVariable("username") String username){
         try {
             return new ResponseEntity<Usuario>(this.servicoUsuarios.retornaUsuario(username).get(), HttpStatus.OK);
@@ -70,6 +79,7 @@ public class ControladorUsuarios {
      * @return ResponseEntity<Usuario> entidade de resposta que representa um usuário
      */
     @GetMapping("/usuarios/campanhas/{email}")
+    @ApiOperation(value="Retorna uma lista de campanhas de um usuário")
     public ResponseEntity<List<Campanha>> retornaCampanhasUsuario(@PathVariable ("email") String email){
         Usuario usuario;
         try {

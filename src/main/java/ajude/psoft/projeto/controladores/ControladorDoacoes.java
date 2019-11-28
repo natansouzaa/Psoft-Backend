@@ -14,6 +14,7 @@ import ajude.psoft.projeto.entidades.Usuario;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoDoacoes;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Controlador que administra as rotas que envolvem as doações, consegue concluir os pedidos que são
@@ -40,6 +41,7 @@ public class ControladorDoacoes {
      * @return ResponseEntity<Campanha> entidade de resposta que representa a campanha que recebeu a doação
      */
     @PostMapping("/doacoes")
+    @ApiOperation(value="Retorna a campanha que recebeu uma doação")
     public ResponseEntity<Campanha> realizaDoacao(@RequestBody DoacaoDTO doacaoDTO){
         Doacao doacaoFinal = doacaoDTO.transformaParaDoacao();
         Usuario usuario = this.servicoUsuarios.retornaUsuario(doacaoDTO.getEmailDono()).get();

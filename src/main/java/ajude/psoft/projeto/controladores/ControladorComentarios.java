@@ -19,6 +19,7 @@ import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoComentarios;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Controlador que administra as rotas que envolvem as doações, consegue concluir os pedidos que são
@@ -47,6 +48,7 @@ public class ControladorComentarios {
      * @return ResponseEntity<List<Comentario>> entidade de resposta que representa uma lista de comentários que a campanha possui
      */
     @PostMapping("/comentarios/adicionarComentario")
+    @ApiOperation(value="Adiciona um novo comentário em uma campanha")
     public ResponseEntity<List<Comentario>> adicionarComentario(@RequestBody ComentarioDTO comentarioDTO, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
         Comentario comentarioFinal = comentarioDTO.transformaParaComentario();
@@ -63,6 +65,7 @@ public class ControladorComentarios {
      * @return ResponseEntity<List<Comentario>> entidade de resposta que representa uma lista de respostas que o comantário possui
      */
     @PostMapping("/comentarios/adicionarResposta")
+    @ApiOperation(value="Adiciona uma nova resposta em um comentário")
     public ResponseEntity<List<Comentario>> adicionarResposta(@RequestBody ComentarioDTO comentarioDTO, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
         Comentario comentarioResposta = comentarioDTO.transformaParaComentario();
@@ -81,6 +84,7 @@ public class ControladorComentarios {
      * que o comentário possui
      */
     @DeleteMapping("/comentarios/removerComentario/{id}")
+    @ApiOperation(value="Remove um comentário de uma campanha ou uma resposta de um comentário")
     public ResponseEntity<List<Comentario>> removerComentario(@PathVariable ("id") long id, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
         Comentario comentario = servicoComentarios.retornaComentario(id);

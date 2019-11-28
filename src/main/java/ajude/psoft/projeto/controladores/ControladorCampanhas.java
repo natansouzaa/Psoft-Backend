@@ -12,6 +12,7 @@ import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Controlador que administra as rotas que envolvem as campanhas, consegue concluir os pedidos que são
@@ -41,6 +42,7 @@ public class ControladorCampanhas {
      */
     
     @PostMapping("/campanhas")
+    @ApiOperation(value="Cadastra uma campanha")
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CampanhaDTO novaCampanhaDTO){
         Campanha campanhaFinal = novaCampanhaDTO.transformarParaCampanha();
         campanhaFinal.setUsuarioDono(servicoUsuarios.retornaUsuario(novaCampanhaDTO.getEmailDono()).get());
@@ -56,6 +58,7 @@ public class ControladorCampanhas {
      *
      * @return ResponseEntity<Campanha> entidade de resposta que representa uma campanha
      */
+    @ApiOperation(value="Retorna uma campanha pelo identificador URL")
     @GetMapping("/campanhas/{identificadorURL}")
     public ResponseEntity<Campanha> retornaCampanhaPeloIdentificadorURL(@PathVariable("identificadorURL") String identificadorURL){
         if (servicoCampanhas.retornaCampanhaPeloIdentificadorURL(identificadorURL) == null){
@@ -72,6 +75,7 @@ public class ControladorCampanhas {
      * @return ResponseEntity<List<Campanha>> entidade de resposta que representa a lista de campanhas que atendem a filtragem
      */
     @GetMapping("/campanhas/pesquisa/{busca}")
+    @ApiOperation(value="Retorna uma lista de campanhas que contém determinada substring")
     public ResponseEntity<List<Campanha>> retornaCampanhasPelaBusca(@PathVariable("busca") String busca, @RequestParam(value="todos", required = false) Boolean todos){
         if (servicoCampanhas.retornaCampanhasPelaBusca(busca, todos).size() == 0){
             throw new ResourceBadRequestException("Nenhum resultado encontrado");
@@ -87,6 +91,7 @@ public class ControladorCampanhas {
      * @return ResponseEntity<Campanha> entidade de resposta que representa a campanha que recebeu ou perdeu uma curtida
      */
     @PostMapping("/campanhas/curtida/{id}")
+    @ApiOperation(value="Adiciona ou exclui uma curtida em uma campanha")
     public ResponseEntity<Campanha> relacaoCurtida(@PathVariable ("id") long id, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
         Usuario usuario = this.servicoUsuarios.retornaUsuario(email).get();
@@ -101,6 +106,7 @@ public class ControladorCampanhas {
      * @return ResponseEntity<Campanha> entidade de resposta que representa a campanha que foi alterada
      */
     @PutMapping("/campanhas/edicao")
+    @ApiOperation(value="Edita a descrição de uma campanha")
     public ResponseEntity<Campanha> editaCampanha(@RequestBody EditaCampanha editaCampanha){
         Campanha campanha = this.servicoCampanhas.retornaCampanhaPeloIdentificadorURL(editaCampanha.getIdentificadorURL());
         if (campanha == null){
@@ -116,6 +122,7 @@ public class ControladorCampanhas {
      * @return ResponseEntity<List<Campanha>> entidade de resposta que representa as campanhas que foram selecionadas
      */
     @GetMapping("/ordenacao/meta")
+    @ApiOperation(value="Retornas as 5 campanhas que estão mais próximas da meta")
     public ResponseEntity<List<Campanha>> retornaCampanhasPelaMeta(){
         return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaMeta(), HttpStatus.OK);
     }
@@ -126,6 +133,7 @@ public class ControladorCampanhas {
      * @return ResponseEntity<List<Campanha>> entidade de resposta que representa as campanhas que foram selecionadas
      */
     @GetMapping("/ordenacao/data")
+    @ApiOperation(value="Retornas as 5 campanhas que estão mais próximas de encerrar")
     public ResponseEntity<List<Campanha>> retornaCampanhasPelaData(){
         return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaData(), HttpStatus.OK);
     }
@@ -136,6 +144,7 @@ public class ControladorCampanhas {
      * @return ResponseEntity<List<Campanha>> entidade de resposta que representa as campanhas que foram selecionadas
      */
     @GetMapping("/ordenacao/curtida")
+    @ApiOperation(value="Retornas as 5 campanhas que possuem mais curtidas")
     public ResponseEntity<List<Campanha>> retornaCampanhasPelaCurtida(){
         return new ResponseEntity<List<Campanha>>(servicoCampanhas.retornaCampanhasPelaCurtida(), HttpStatus.OK);
     }

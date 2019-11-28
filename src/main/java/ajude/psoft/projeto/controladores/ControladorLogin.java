@@ -13,6 +13,7 @@ import ajude.psoft.projeto.entidades.UsuarioDTO;
 import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Controlador que administra os logins dos usuários, consegue gerar tokens como respostas para que os
@@ -38,6 +39,7 @@ public class ControladorLogin {
      * @return LoginResponse token gerado
      */
 	@PostMapping("/login")
+	@ApiOperation(value="Retorna um token pro usuário")
 	public LoginResponse authenticate(@RequestBody UsuarioDTO usuarioDTO){
 
 		// Recupera o usuario
