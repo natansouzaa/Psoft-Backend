@@ -14,6 +14,12 @@ import javax.persistence.TemporalType;
 
 import ajude.psoft.projeto.erros.ResourceBadRequestException;
 
+/**
+ * Classe que tem a função de ser a entidade campanha que armazena dados do usuário, dos comentários, das
+ * curtidas, das doações e dos Estados possíveis da campanha.
+ * 
+ * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
+ */
 @Entity
 public class Campanha {
 
@@ -21,7 +27,7 @@ public class Campanha {
     @GeneratedValue
     private long id;
     private String nomeCurto;
-    private String identificadorURL; //sera gerado pelo frontend
+    private String identificadorURL;
     private String descricao;
     @Temporal(TemporalType.DATE)
     private Date dataLimite;
@@ -37,10 +43,28 @@ public class Campanha {
     @OneToMany
     private List<Doacao> doacoes;
 
+    /**
+    * Constrói uma campanha vazia.
+	*/
     public Campanha() {
         super();
     }
 
+    /**
+    * Constrói uma campanha a partir dos dados passados como parâmetro.
+	* 
+    * @param nomeCurto nome curto da campanha
+    * @param identificadorURL URL da campanha
+    * @param descricao descrição da campanha
+    * @param dataLimite data limite para arrecadação do dinheiro da campanha
+    * @param status estado da campanha
+    * @param meta meta de dinheiro que a campanha necessita
+    * @param doacoes doações que a campanha recebeu
+    * @param usuarioDono usuário dono da campanha
+    * @param curtidas curtidas que a campanha recebeu
+    * @param comentarios comentários que a campanha possui
+    * @param arrecadado total de dinheiro arrecadado pela campanha
+	*/
     public Campanha(String nomeCurto, String identificadorURL, String descricao,
                     Date dataLimite, Estado status, float meta, ArrayList<Doacao> doacoes, Usuario usuarioDono,
                     ArrayList<Curtida> curtidas, ArrayList<Comentario> comentarios, float arrecadado) {
@@ -58,6 +82,22 @@ public class Campanha {
         this.arrecadado = arrecadado;
     }
 
+    /**
+    * Constrói uma campanha a partir dos dados passados como parâmetro, incluido o id da doação.
+	* 
+	* @param id identificador único da campanha
+    * @param nomeCurto nome curto da campanha
+    * @param identificadorURL URL da campanha
+    * @param descricao descrição da campanha
+    * @param dataLimite data limite para arrecadação do dinheiro da campanha
+    * @param status estado da campanha
+    * @param meta meta de dinheiro que a campanha necessita
+    * @param doacoes doações que a campanha recebeu
+    * @param usuarioDono usuário dono da campanha
+    * @param curtidas curtidas que a campanha recebeu
+    * @param comentarios comentários que a campanha possui
+    * @param arrecadado total de dinheiro arrecadado pela campanha
+	*/
     public Campanha(long id, String nomeCurto, String identificadorURL, String descricao,
                     Date dataLimite, Estado status, float meta, ArrayList<Doacao> doacoes, Usuario usuarioDono,
                     ArrayList<Curtida> curtidas, ArrayList<Comentario> comentarios, float arrecadado) {
@@ -76,6 +116,11 @@ public class Campanha {
         this.arrecadado = arrecadado;
     }
 
+    /**
+    * Método responsável por realizar uma doação na campanha.
+    * 
+    * @param doacao doação que será adicionada na campanha
+	*/
     public void realizaDoacao(Doacao doacao){
         if (this.getStatus().equals(Estado.ENCERRADA) || this.getStatus().equals(Estado.VENCIDA) || this.getStatus().equals(Estado.CONCLUIDA)){
             throw new ResourceBadRequestException("Esta campanha não está mais disponível para receber doações");
@@ -84,18 +129,38 @@ public class Campanha {
         this.arrecadado += doacao.getValorDoado();
     }
 
+    /**
+    * Método responsável por adicionar uma curtida na campanha.
+    * 
+    * @param curtida curtida que será adicionada na campanha
+	*/
     public void adicionarCurtida(Curtida curtida){
         this.curtidas.add(curtida);
     }
 
+    /**
+    * Método responsável por remover uma curtida da campanha.
+    * 
+    * @param curtida curtida que será removida na campanha
+	*/
     public void removerCurtida(Curtida curtida){
         this.curtidas.remove(curtida);
     }
 
+    /**
+    * Método responsável por adicionar um comentário na campanha.
+    * 
+    * @param comentario comentário que será adicionado na campanha
+	*/
     public void adicionarComentario(Comentario comentario){
         comentarios.add(comentario);
     }
 
+    /**
+    * Método responsável por remover um comentário da campanha.
+    * 
+    * @param comentario comentário que será excluido da campanha
+	*/
     public void removerComentario(Comentario comentario){
         for (Comentario c: this.comentarios){
             if (c.getId() == comentario.getId()){
@@ -104,6 +169,10 @@ public class Campanha {
             }
         }
     }
+
+    /**
+    * getters e setters.
+    */
 
     public long getId() {
         return this.id;
@@ -201,6 +270,11 @@ public class Campanha {
         this.curtidas = curtidas;
     }
 
+    /**
+    * Método que retorna uma representação textual da campanha.
+    *
+    * @return String representação textual da campanha
+    */
     @Override
     public String toString() {
         return "Campanha{" +

@@ -18,9 +18,22 @@ import io.jsonwebtoken.PrematureJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+/**
+ * Classe que manipula informações que envolvem tokens, fazendo verificações se tokens são válidos, se
+ * são do tipo correto, se não envia as devidas mensagens de erros.
+ * 
+ * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
+ */
 public class FiltroToken extends GenericFilterBean {
     public final static int TOKEN_INDEX = 7;
 
+    /**
+	* Método que faz a checagem se existe um token e também se ele é válido.
+    * 
+    * @param request requisição feita
+    * @param response response gerada
+    * @param chain filtro utilizado
+	*/
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {

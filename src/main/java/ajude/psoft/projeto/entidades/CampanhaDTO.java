@@ -6,6 +6,12 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * Classe que possui uma representação mais simples de uma campanha, serve como Body que são passados
+ * como request no controlador de campanhas.
+ * 
+ * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
+ */
 public class CampanhaDTO {
 
     private String nomeCurto;
@@ -16,6 +22,16 @@ public class CampanhaDTO {
     private float meta;
     private String emailDono;   
 
+    /**
+    * Constrói a CampanhaDTO a partir dos dados passados como parâmetro.
+	* 
+	* @param nomeCurto nome curto da campanha
+    * @param identificadorURL URL da campanha
+    * @param descricao descrição da campanha
+    * @param dataLimite data limite para arrecadação do dinheiro da campanha
+    * @param meta meta de dinheiro que a campanha necessita
+	* @param emailDono email do dono da campanha
+	*/
     public CampanhaDTO(String nomeCurto, String identificadorURL, String descricao, Date dataLimite, float meta, String emailDono) {
         this.nomeCurto = nomeCurto;
         this.identificadorURL = identificadorURL;
@@ -25,9 +41,13 @@ public class CampanhaDTO {
         this.emailDono = emailDono;
     }
 
+    /**
+    * Método responsável por fazer a transformação de uma CampanhaDTO para uma Campanha completa.
+	* 
+	* @return Campanha campanha fruto da transformação
+	*/
     public Campanha transformarParaCampanha(){
         Campanha retorno = new Campanha();
-        this.dataLimite.setDate(this.dataLimite.getDate() + 1);
         retorno.setDataLimite(this.getDataLimite());
         retorno.setDescricao(this.getDescricao());
         retorno.setCurtidas(new ArrayList<Curtida>());
@@ -38,6 +58,10 @@ public class CampanhaDTO {
         retorno.setArrecadado(0);
         return retorno;
     }
+
+    /**
+    * getters e setters.
+    */
 
     public String getNomeCurto() {
         return this.nomeCurto;

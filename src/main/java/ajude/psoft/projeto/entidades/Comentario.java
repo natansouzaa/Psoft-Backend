@@ -14,7 +14,12 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+/**
+ * Classe que tem a função de ser a entidade comentário que armazena dados do usuário, da campanha
+ * e dos comentários em sí.
+ * 
+ * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
+ */
 @Entity
 public class Comentario {
 
@@ -32,10 +37,23 @@ public class Comentario {
     @ManyToOne
     private Campanha campanha;
 
+    /**
+    * Constrói um comentário vazio.
+	*/
     public Comentario() {
         super();
     }
 
+    /**
+    * Constrói um comentário a partir dos dados passados como parâmetro, incluido o id do comentário.
+	* 
+	* @param id identificador único do comentário
+    * @param texto texto do comentário
+    * @param usuario usuário que postou o comentário
+    * @param respostas resposta que um comentário pode possuir
+    * @param dataPostagem data da postagem do comentário
+    * @param campanha campanha onde o comentário foi postado
+	*/
     public Comentario(long id, String texto, Usuario usuario, ArrayList<Comentario> respostas, Date dataPostagem, Campanha campanha){
         super();
         this.id = id;
@@ -46,6 +64,15 @@ public class Comentario {
         this.campanha = campanha;
     }
 
+    /**
+    * Constrói um comentário a partir dos dados passados como parâmetro.
+	* 
+    * @param texto texto do comentário
+    * @param usuario usuário que postou o comentário
+    * @param respostas resposta que um comentário pode possuir
+    * @param dataPostagem data da postagem do comentário
+    * @param campanha campanha onde o comentário foi postado
+	*/
     public Comentario(String texto, Usuario usuario, ArrayList<Comentario> respostas, Date dataPostagem, Campanha campanha){
         super();
         this.texto = texto;
@@ -55,13 +82,25 @@ public class Comentario {
         this.campanha = campanha;
     }
 
+    /**
+	* Método responsável por adicionar uma resposta em um comentário.
+    * 
+    * @param resposta resposta a ser adicionada
+	*/
     public void adicionarResposta(Comentario resposta){
         this.respostas.add(resposta);
     }
 
+    /**
+	* Método responsável por "remover" uma resposta de um comentário.
+	*/
     public void removerResposta(){
-        this.setTexto("Resposta excluida");
+        this.setTexto("");
     }
+
+    /**
+    * getters e setters.
+    */
 
     public long getId() {
         return this.id;
@@ -111,13 +150,4 @@ public class Comentario {
         this.campanha = campanha;
     }
 
-    @Override
-    public String toString() {
-        return "Comentario{" +
-                "id=" + id +
-                ", texto='" + texto + '\'' +
-                ", usuario=" + usuario +
-                ", comentario=" + respostas +
-                '}';
-    }
 }

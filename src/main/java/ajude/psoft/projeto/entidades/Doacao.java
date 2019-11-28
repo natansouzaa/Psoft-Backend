@@ -11,6 +11,12 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Classe que tem a função de ser a entidade doação que armazena dados do usuário, da campanha
+ * e das doações em sí.
+ * 
+ * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
+ */
 @Entity
 public class Doacao {
 
@@ -26,10 +32,22 @@ public class Doacao {
     @Temporal(TemporalType.DATE)
     private Date dataPostagem;
 
+    /**
+    * Constrói uma doação vazia.
+	*/
     public Doacao(){
         super();
     }
 
+    /**
+    * Constrói uma doação a partir dos dados passados como parâmetro, incluido o id da doação.
+	* 
+	* @param id identificador único da doação
+    * @param usuario usuário que realizou a doação
+    * @param valorDoado valor que o usuário doou
+    * @param campanha campanha que o usuário ajudou
+    * @param dataPostagem data de realização da doação
+	*/
     public Doacao(long id, Usuario usuario, float valorDoado, Campanha campanha, Date dataPostagem) {
         super();
         this.id = id;
@@ -39,6 +57,14 @@ public class Doacao {
         this.dataPostagem = dataPostagem;
     }
 
+    /**
+    * Constrói uma doação a partir dos dados passados como parâmetro.
+	* 
+    * @param usuario usuário que realizou a doação
+    * @param valorDoado valor que o usuário doou
+    * @param campanha campanha que o usuário ajudou
+    * @param dataPostagem data de realização da doação
+	*/
     public Doacao(Usuario usuario, float valorDoado, Campanha campanha, Date dataPostagem) {
         super();
         this.usuario = usuario;
@@ -46,6 +72,10 @@ public class Doacao {
         this.campanha = campanha;
         this.dataPostagem = dataPostagem;
     }
+
+    /**
+    * getters e setters.
+    */
 
     public long getId() {
         return this.id;

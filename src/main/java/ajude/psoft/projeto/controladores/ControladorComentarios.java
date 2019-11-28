@@ -20,8 +20,16 @@ import ajude.psoft.projeto.servicos.ServicoComentarios;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
 
+/**
+ * Controlador que administra as rotas que envolvem as doações, consegue concluir os pedidos que são
+ * feitos com a ajuda dos serviços que possui.
+ * 
+ * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
+ */
 @RestController
 public class ControladorComentarios {
+
+    //Inicializando os serviços jwt e de usuarios automaticamente.
 
     @Autowired
     private ServicoCampanhas servicoCampanhas;
@@ -32,6 +40,12 @@ public class ControladorComentarios {
     @Autowired
     private ServicoJWT jwtService;
 
+    /**
+     * Rota de PostMapping que adiciona um comentário passado pelo body em uma campanha existente no banco de dados. O
+     * usuário que está fazendo o comentário consegue ser capturado graças ao header authorization.
+     *
+     * @return ResponseEntity<List<Comentario>> entidade de resposta que representa uma lista de comentários que a campanha possui
+     */
     @PostMapping("/comentarios/adicionarComentario")
     public ResponseEntity<List<Comentario>> adicionarComentario(@RequestBody ComentarioDTO comentarioDTO, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
@@ -42,6 +56,12 @@ public class ControladorComentarios {
         return new ResponseEntity<List<Comentario>>(this.servicoCampanhas.adicionarComentario(comentarioFinal), HttpStatus.CREATED);
     }
 
+    /**
+     * Rota de PostMapping que adiciona uma resposta passada pelo body em um comentário existente no banco de dados. O
+     * usuário que está fazendo a resposta consegue ser capturado graças ao header authorization.
+     *
+     * @return ResponseEntity<List<Comentario>> entidade de resposta que representa uma lista de respostas que o comantário possui
+     */
     @PostMapping("/comentarios/adicionarResposta")
     public ResponseEntity<List<Comentario>> adicionarResposta(@RequestBody ComentarioDTO comentarioDTO, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);
@@ -53,6 +73,13 @@ public class ControladorComentarios {
         return new ResponseEntity<List<Comentario>>(this.servicoComentarios.adicionarResposta(comentarioPai, comentarioResposta), HttpStatus.CREATED);
     }
 
+    /**
+     * Rota de DeleteMapping que remove um comentário de uma campanha ou de um comentário existente no banco de dados. O
+     * usuário que está fazendo a deleção consegue ser capturado graças ao header authorization.
+     *
+     * @return ResponseEntity<List<Comentario>> entidade de resposta que representa uma lista de comentários que a campanha ou
+     * que o comentário possui
+     */
     @DeleteMapping("/comentarios/removerComentario/{id}")
     public ResponseEntity<List<Comentario>> removerComentario(@PathVariable ("id") long id, @RequestHeader("Authorization") String header){
         String email = this.jwtService.getSujeitoDoToken(header);

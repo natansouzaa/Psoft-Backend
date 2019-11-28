@@ -18,16 +18,28 @@ import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
 
+/**
+ * Controlador que administra as rotas que envolvem os usuários, consegue concluir os pedidos que são
+ * feitos com a ajuda dos serviços que possui.
+ * 
+ * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
+ */
 @RestController
 public class ControladorUsuarios {
+
+    //Inicializando os serviços de campanhas e usuarios automaticamente. 
 
     @Autowired
     private ServicoUsuarios servicoUsuarios;
     @Autowired
     private ServicoCampanhas servicoCampanhas;
 
-    // Adiciona um usuario com email, nome e senha. O email sera o login do usuario
-    // e deve ser o identificador unico
+    /**
+     * Rota de PostMapping que adiciona um usuário com email, nome, cartão de crédiro e senha. O email será o login do usuário
+     * e também deve ser seu identificador único. Recebe um usuarioDTO no body para auxiliar no cadastro do usuário.
+     *
+     * @return ResponseEntity<Usuario> entidade de resposta que representa um usuário
+     */
     @PostMapping("/usuarios")
     public ResponseEntity<Usuario> adicionaUsuario(@RequestBody Usuario novoUsuario){
         if (servicoUsuarios.existeNoDAO(novoUsuario.getEmail())){
@@ -36,6 +48,11 @@ public class ControladorUsuarios {
         return new ResponseEntity<Usuario>(servicoUsuarios.adicionaUsuario(novoUsuario), HttpStatus.CREATED);
     }
 
+    /**
+     * Rota de GetMapping que retorna um usuário a partir do seu username(email) que será passado como PathVariable na URL.
+     *
+     * @return ResponseEntity<Usuario> entidade de resposta que representa um usuário
+     */
     @GetMapping("/usuarios/{username}")
     public ResponseEntity<Usuario> retornaUsuarioPeloUsername(@PathVariable("username") String username){
         try {
@@ -46,6 +63,12 @@ public class ControladorUsuarios {
         
     }
 
+    /**
+     * Rota de GetMapping que retorna uma lista de campanhas que um usuário criou ou contribuiu com alguma doação. Este
+     * usuário é recuperado a partir do seu email que será passado como PathVariable na URL.
+     *
+     * @return ResponseEntity<Usuario> entidade de resposta que representa um usuário
+     */
     @GetMapping("/usuarios/campanhas/{email}")
     public ResponseEntity<List<Campanha>> retornaCampanhasUsuario(@PathVariable ("email") String email){
         Usuario usuario;
