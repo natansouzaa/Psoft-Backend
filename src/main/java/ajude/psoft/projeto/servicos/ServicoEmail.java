@@ -43,7 +43,7 @@ public class ServicoEmail {
 		mail.setSubject("Cadastro Confirmado!");
 		mail.setText("Olá, Seja Bem Vindo(a)!\n\nSeu cadastro foi realizado com sucesso, aproveite ao máximo a experiência " + 
 		"de participar ativamente de nossos projetos. Para dar o primeiro passo e realizar sua primeira doação basta acessar o link: " +
-		"objective-joliot-647bdf.netlify.com\n\nEste e-mail foi enviado automaticamente pelo nosso sistema.");
+		"projetoajude.netlify.com\n\nEste e-mail foi enviado automaticamente pelo nosso sistema.");
 
 		this.javaMailSender.send(mail);
 	}
