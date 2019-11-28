@@ -3,8 +3,10 @@ package ajude.psoft.projeto.controladores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ajude.psoft.projeto.entidades.Campanha;
@@ -14,6 +16,7 @@ import ajude.psoft.projeto.entidades.Usuario;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoDoacoes;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -23,6 +26,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
  */
 @RestController
+@Api(value="API REST de Financiamento coletivo")
 public class ControladorDoacoes {
 
     //Inicializando os serviços jwt e de usuarios automaticamente.

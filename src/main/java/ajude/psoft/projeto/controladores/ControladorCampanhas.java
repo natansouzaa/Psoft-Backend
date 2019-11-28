@@ -12,6 +12,7 @@ import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoCampanhas;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -21,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
  */
 @RestController
+@Api(value="API REST de Financiamento coletivo")
 public class ControladorCampanhas {
 
     //Inicializando os serviços jwt e de usuarios automaticamente.

@@ -28,9 +28,7 @@ import io.swagger.annotations.ApiOperation;
  * 
  * @author Mauricio Marques da Silva Monte e Natan Ataide de Souza.
  */
-@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value="")
 @Api(value="API REST de Financiamento coletivo")
 public class ControladorUsuarios {
 

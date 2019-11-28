@@ -3,6 +3,7 @@ package ajude.psoft.projeto.controladores;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import ajude.psoft.projeto.entidades.UsuarioDTO;
 import ajude.psoft.projeto.erros.ResourceBadRequestException;
 import ajude.psoft.projeto.servicos.ServicoJWT;
 import ajude.psoft.projeto.servicos.ServicoUsuarios;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -23,6 +25,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/auth")
+@Api(value="API REST de Financiamento coletivo")
 public class ControladorLogin {
 
 	//Inicializando os serviços jwt e de usuarios automaticamente. 
